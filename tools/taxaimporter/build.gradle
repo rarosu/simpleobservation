@@ -5,3 +5,7 @@ plugins {
 application {
     mainClassName = 'com.rarosu.simpleobservation.taxaimporter.Main'
 }
+
+dependencies {
+    implementation project(':common')
+}
