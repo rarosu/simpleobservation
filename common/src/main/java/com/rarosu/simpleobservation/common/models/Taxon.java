@@ -1,11 +1,11 @@
 package com.rarosu.simpleobservation.common.models;
 
 
-public class Taxa {
+public class Taxon {
     private final int id;
     private final String scientificName;
     
-    public Taxa(int id, String scientificName) {
+    public Taxon(int id, String scientificName) {
         this.id = id;
         this.scientificName = scientificName;
     }
