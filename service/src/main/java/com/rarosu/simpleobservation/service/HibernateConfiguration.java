@@ -26,8 +26,9 @@ public class HibernateConfiguration {
         
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(resolveSessionFactoryDataSource());
-        sessionFactory.setMappingResources("taxon.hbm.xml");
         sessionFactory.setHibernateProperties(hibernateProperties);
+        
+        sessionFactory.setPackagesToScan("com.rarosu.simpleobservation.common.models");
         
         return sessionFactory;
     }
