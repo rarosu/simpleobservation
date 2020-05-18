@@ -32,8 +32,8 @@ public class Observation {
     @Column(name = "latitude")
     private Double latitude;
     
-    @Column(name = "precision")
-    private Precision precision;
+    @Column(name = "coordinate_precision")
+    private Precision coordinatePrecision;
     
     @Column(name = "location_name")
     private String locationName;
@@ -128,12 +128,12 @@ public class Observation {
         this.latitude = latitude;
     }
 
-    public Precision getPrecision() {
-        return precision;
+    public Precision getCoordinatePrecision() {
+        return coordinatePrecision;
     }
 
-    public void setPrecision(Precision precision) {
-        this.precision = precision;
+    public void setCoordinatePrecision(Precision coordinatePrecision) {
+        this.coordinatePrecision = coordinatePrecision;
     }
 
     public String getLocationName() {
