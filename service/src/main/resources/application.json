@@ -1,0 +1,7 @@
+{
+    "database": {
+        "url": "jdbc:postgresql://localhost/simpleobservation",
+        "username": "simpleobsuser",
+        "password": "password"
+   }
+}

@@ -13,4 +13,11 @@ dependencies {
     
     implementation 'org.springframework.boot:spring-boot-starter-web'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    implementation 'org.springframework:spring-tx:5.2.6.RELEASE'
+    implementation 'org.springframework:spring-orm:5.2.6.RELEASE'
+    implementation 'org.postgresql:postgresql:42.2.11'
+    implementation 'org.hibernate:hibernate-core:5.4.0.Final'
+    implementation 'org.jinq:jinq-jpa:1.8.29'
+    implementation 'org.apache.commons:commons-dbcp2:2.7.0'
+    implementation 'com.typesafe:config:1.4.0'
 }
