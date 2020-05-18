@@ -1,65 +1,90 @@
 package com.rarosu.simpleobservation.common.models;
 
 import java.time.OffsetDateTime;
-import java.util.Optional;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-
+@Entity
+@Table(name = "observation_list")
 public class ObservationList {
-    private int id;
-    private double longitude;
-    private double latitude;
+    
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
+    private Integer id;
+    
+    @Column(name = "longitude")
+    private Double longitude;
+    
+    @Column(name = "latitude")
+    private Double latitude;
+    
+    @Column(name = "precision")
     private Precision precision;
-    private Optional<String> locationName;
+    
+    @Column(name = "location_name")
+    private String locationName;
+    
+    @Column(name = "list_name")
     private String listName;
-    private Optional<String> privateComment;
-    private Optional<String> publicComment;
+    
+    @Column(name = "private_comment")
+    private String privateComment;
+    
+    @Column(name = "public_comment")
+    private String publicComment;
+    
+    @Column(name = "creation_date_time")
     private OffsetDateTime creationDateTime;
-    private Optional<OffsetDateTime> observationDateTime;
-    private Optional<Habitat> habitat;
-    private Optional<String> habitatDescription;
+    
+    @Column(name = "observation_date_time")
+    private OffsetDateTime observationDateTime;
+    
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "habitat_id")
+    private Habitat habitat;
+    
+    @Column(name = "habitat_description")
+    private String habitatDescription;
 
     /**
      * Used by Hibernate.
      */
-    private ObservationList() {
+    ObservationList() {
     }
     
-    public ObservationList(int id, double longitude, double latitude, Precision precision, Optional<String> locationName, String listName, Optional<String> privateComment, Optional<String> publicComment, OffsetDateTime creationDateTime, Optional<OffsetDateTime> observationDateTime, Optional<Habitat> habitat, Optional<String> habitatDescription) {
+    public ObservationList(Integer id, String listName) {
         this.id = id;
-        this.longitude = longitude;
-        this.latitude = latitude;
-        this.precision = precision;
-        this.locationName = locationName;
         this.listName = listName;
-        this.privateComment = privateComment;
-        this.publicComment = publicComment;
-        this.creationDateTime = creationDateTime;
-        this.observationDateTime = observationDateTime;
-        this.habitat = habitat;
-        this.habitatDescription = habitatDescription;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    private void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public double getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    private void setLongitude(double longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
-    public double getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    private void setLatitude(double latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
@@ -67,15 +92,15 @@ public class ObservationList {
         return precision;
     }
 
-    private void setPrecision(Precision precision) {
+    public void setPrecision(Precision precision) {
         this.precision = precision;
     }
 
-    public Optional<String> getLocationName() {
+    public String getLocationName() {
         return locationName;
     }
 
-    private void setLocationName(Optional<String> locationName) {
+    public void setLocationName(String locationName) {
         this.locationName = locationName;
     }
 
@@ -83,23 +108,23 @@ public class ObservationList {
         return listName;
     }
 
-    private void setListName(String listName) {
+    public void setListName(String listName) {
         this.listName = listName;
     }
 
-    public Optional<String> getPrivateComment() {
+    public String getPrivateComment() {
         return privateComment;
     }
 
-    private void setPrivateComment(Optional<String> privateComment) {
+    public void setPrivateComment(String privateComment) {
         this.privateComment = privateComment;
     }
 
-    public Optional<String> getPublicComment() {
+    public String getPublicComment() {
         return publicComment;
     }
 
-    private void setPublicComment(Optional<String> publicComment) {
+    public void setPublicComment(String publicComment) {
         this.publicComment = publicComment;
     }
 
@@ -107,33 +132,31 @@ public class ObservationList {
         return creationDateTime;
     }
 
-    private void setCreationDateTime(OffsetDateTime creationDateTime) {
+    public void setCreationDateTime(OffsetDateTime creationDateTime) {
         this.creationDateTime = creationDateTime;
     }
 
-    public Optional<OffsetDateTime> getObservationDateTime() {
+    public OffsetDateTime getObservationDateTime() {
         return observationDateTime;
     }
 
-    private void setObservationDateTime(Optional<OffsetDateTime> observationDateTime) {
+    public void setObservationDateTime(OffsetDateTime observationDateTime) {
         this.observationDateTime = observationDateTime;
     }
 
-    public Optional<Habitat> getHabitat() {
+    public Habitat getHabitat() {
         return habitat;
     }
 
-    public void setHabitat(Optional<Habitat> habitat) {
+    public void setHabitat(Habitat habitat) {
         this.habitat = habitat;
     }
 
-    public Optional<String> getHabitatDescription() {
+    public String getHabitatDescription() {
         return habitatDescription;
     }
 
-    public void setHabitatDescription(Optional<String> habitatDescription) {
+    public void setHabitatDescription(String habitatDescription) {
         this.habitatDescription = habitatDescription;
     }
-    
-    
 }

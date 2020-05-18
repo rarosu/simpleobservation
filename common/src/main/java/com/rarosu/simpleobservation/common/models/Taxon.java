@@ -1,22 +1,46 @@
 package com.rarosu.simpleobservation.common.models;
 
-import java.util.Optional;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "taxon")
 public class Taxon {
-    private int id;
-    private int dyntaxaId;
-    private Optional<Taxon> parentTaxon;
+    
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
+    private Integer id;
+    
+    @Column(name = "dyntaxa_id")
+    private Integer dyntaxaId;
+    
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "parent_taxon_id")
+    private Taxon parentTaxon;
+    
+    @Column(name = "ranking")
     private TaxonRanking ranking;
+    
+    @Column(name = "scientific_name")
     private String scientificName;
+    
+    @Column(name = "swedish_name")
     private String swedishName;
     
     /**
      * Used by Hibernate.
      */
-    private Taxon() {
+    Taxon() {
     }
     
-    public Taxon(int id, int dyntaxaId, Optional<Taxon> parentTaxon, TaxonRanking ranking, String scientificName, String swedishName) {
+    public Taxon(Integer id, Integer dyntaxaId, Taxon parentTaxon, TaxonRanking ranking, String scientificName, String swedishName) {
         this.id = id;
         this.dyntaxaId = dyntaxaId;
         this.parentTaxon = parentTaxon;
@@ -25,56 +49,51 @@ public class Taxon {
         this.swedishName = swedishName;
     }
     
-    public int getId() {
+    public Integer getId() {
         return id;
     }
     
-    private void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
     
-    
-    public int getDyntaxaId() {
+    public Integer getDyntaxaId() {
         return dyntaxaId;
     }
 
-    private void setDyntaxaId(int dyntaxaId) {
+    public void setDyntaxaId(Integer dyntaxaId) {
         this.dyntaxaId = dyntaxaId;
     }
-
     
-    public Optional<Taxon> getParentTaxon() {
+    public Taxon getParentTaxon() {
         return parentTaxon;
     }
 
-    private void setParentTaxon(Optional<Taxon> parentTaxon) {
+    public void setParentTaxon(Taxon parentTaxon) {
         this.parentTaxon = parentTaxon;
     }
-
 
     public TaxonRanking getRanking() {
         return ranking;
     }
 
-    private void setRanking(TaxonRanking ranking) {
+    public void setRanking(TaxonRanking ranking) {
         this.ranking = ranking;
     }
-    
     
     public String getScientificName() {
         return scientificName;
     }
     
-    private void setScientificName(String scientificName) {
+    public void setScientificName(String scientificName) {
         this.scientificName = scientificName;
     }
-    
 
     public String getSwedishName() {
         return swedishName;
     }
 
-    private void setSwedishName(String swedishName) {
+    public void setSwedishName(String swedishName) {
         this.swedishName = swedishName;
     }
 }

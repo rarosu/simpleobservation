@@ -1,63 +1,98 @@
 package com.rarosu.simpleobservation.common.models;
 
 import java.time.OffsetDateTime;
-import java.util.Optional;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-
+@Entity
+@Table(name = "observation")
 public class Observation {
-    private int id;
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
+    private Integer id;
+    
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "taxon_id")
     private Taxon taxon;
+    
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "observation_list_id")
     private ObservationList observationList;
-    private double longitude;
-    private double latitude;
+    
+    @Column(name = "longitude")
+    private Double longitude;
+    
+    @Column(name = "latitude")
+    private Double latitude;
+    
+    @Column(name = "precision")
     private Precision precision;
-    private Optional<String> locationName;
-    private Optional<String> privateComment;
-    private Optional<String> publicComment;
+    
+    @Column(name = "location_name")
+    private String locationName;
+    
+    @Column(name = "private_comment")
+    private String privateComment;
+    
+    @Column(name = "public_comment")
+    private String publicComment;
+    
+    @Column(name = "creation_date_time")
     private OffsetDateTime creationDateTime;
-    private Optional<OffsetDateTime> observationDateTime;
-    private Optional<Sex> sex;
-    private Optional<Integer> individualCount;
-    private Optional<IndividualCountMeasure> individualCountMeasure;
-    private Optional<AgeStage> ageStage;
-    private boolean found;
-    private Optional<Habitat> habitat;
+    
+    @Column(name = "observation_date_time")
+    private OffsetDateTime observationDateTime;
+    
+    @Column(name = "sex")
+    private Sex sex;
+    
+    @Column(name = "individual_count")
+    private Integer individualCount;
+    
+    @Column(name = "individual_count_measure")
+    private IndividualCountMeasure individualCountMeasure;
+    
+    @Column(name = "age_stage")
+    private AgeStage ageStage;
+    
+    @Column(name = "is_found")
+    private Boolean isFound;
+    
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "habitat_id")
+    private Habitat habitat;
+    
+    @Column(name = "habitat_description")
     private String habitatDescription;
+    
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "host_taxon_id")
     private Taxon hostTaxon;
 
     /**
      * Used by Hibernate.
      */
-    private Observation() {
+    Observation() {
     }
     
-    public Observation(int id, Taxon taxon, ObservationList observationList, double longitude, double latitude, Precision precision, Optional<String> locationName, Optional<String> privateComment, Optional<String> publicComment, OffsetDateTime creationDateTime, Optional<OffsetDateTime> observationDateTime, Optional<Sex> sex, Optional<Integer> individualCount, Optional<IndividualCountMeasure> individualCountMeasure, Optional<AgeStage> ageStage, boolean found, Optional<Habitat> habitat, String habitatDescription, Taxon hostTaxon) {
+    public Observation(Integer id, Taxon taxon, ObservationList observationList) {
         this.id = id;
         this.taxon = taxon;
         this.observationList = observationList;
-        this.longitude = longitude;
-        this.latitude = latitude;
-        this.precision = precision;
-        this.locationName = locationName;
-        this.privateComment = privateComment;
-        this.publicComment = publicComment;
-        this.creationDateTime = creationDateTime;
-        this.observationDateTime = observationDateTime;
-        this.sex = sex;
-        this.individualCount = individualCount;
-        this.individualCountMeasure = individualCountMeasure;
-        this.ageStage = ageStage;
-        this.found = found;
-        this.habitat = habitat;
-        this.habitatDescription = habitatDescription;
-        this.hostTaxon = hostTaxon;
     }
 
     public int getId() {
         return id;
     }
 
-    private void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -65,7 +100,7 @@ public class Observation {
         return taxon;
     }
 
-    private void setTaxon(Taxon taxon) {
+    public void setTaxon(Taxon taxon) {
         this.taxon = taxon;
     }
 
@@ -73,23 +108,23 @@ public class Observation {
         return observationList;
     }
 
-    private void setObservationList(ObservationList observationList) {
+    public void setObservationList(ObservationList observationList) {
         this.observationList = observationList;
     }
 
-    public double getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    private void setLongitude(double longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
-    public double getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    private void setLatitude(double latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
@@ -97,31 +132,31 @@ public class Observation {
         return precision;
     }
 
-    private void setPrecision(Precision precision) {
+    public void setPrecision(Precision precision) {
         this.precision = precision;
     }
 
-    public Optional<String> getLocationName() {
+    public String getLocationName() {
         return locationName;
     }
 
-    private void setLocationName(Optional<String> locationName) {
+    public void setLocationName(String locationName) {
         this.locationName = locationName;
     }
 
-    public Optional<String> getPrivateComment() {
+    public String getPrivateComment() {
         return privateComment;
     }
 
-    private void setPrivateComment(Optional<String> privateComment) {
+    public void setPrivateComment(String privateComment) {
         this.privateComment = privateComment;
     }
 
-    public Optional<String> getPublicComment() {
+    public String getPublicComment() {
         return publicComment;
     }
 
-    private void setPublicComment(Optional<String> publicComment) {
+    public void setPublicComment(String publicComment) {
         this.publicComment = publicComment;
     }
 
@@ -129,63 +164,63 @@ public class Observation {
         return creationDateTime;
     }
 
-    private void setCreationDateTime(OffsetDateTime creationDateTime) {
+    public void setCreationDateTime(OffsetDateTime creationDateTime) {
         this.creationDateTime = creationDateTime;
     }
 
-    public Optional<OffsetDateTime> getObservationDateTime() {
+    public OffsetDateTime getObservationDateTime() {
         return observationDateTime;
     }
 
-    private void setObservationDateTime(Optional<OffsetDateTime> observationDateTime) {
+    public void setObservationDateTime(OffsetDateTime observationDateTime) {
         this.observationDateTime = observationDateTime;
     }
 
-    public Optional<Sex> getSex() {
+    public Sex getSex() {
         return sex;
     }
 
-    private void setSex(Optional<Sex> sex) {
+    public void setSex(Sex sex) {
         this.sex = sex;
     }
 
-    public Optional<Integer> getIndividualCount() {
+    public Integer getIndividualCount() {
         return individualCount;
     }
 
-    private void setIndividualCount(Optional<Integer> individualCount) {
+    public void setIndividualCount(Integer individualCount) {
         this.individualCount = individualCount;
     }
 
-    public Optional<IndividualCountMeasure> getIndividualCountMeasure() {
+    public IndividualCountMeasure getIndividualCountMeasure() {
         return individualCountMeasure;
     }
 
-    private void setIndividualCountMeasure(Optional<IndividualCountMeasure> individualCountMeasure) {
+    public void setIndividualCountMeasure(IndividualCountMeasure individualCountMeasure) {
         this.individualCountMeasure = individualCountMeasure;
     }
 
-    public Optional<AgeStage> getAgeStage() {
+    public AgeStage getAgeStage() {
         return ageStage;
     }
 
-    private void setAgeStage(Optional<AgeStage> ageStage) {
+    public void setAgeStage(AgeStage ageStage) {
         this.ageStage = ageStage;
     }
 
-    public boolean getFound() {
-        return found;
+    public Boolean getIsFound() {
+        return isFound;
     }
 
-    private void setFound(boolean found) {
-        this.found = found;
+    public void setIsFound(Boolean isFound) {
+        this.isFound = isFound;
     }
 
-    public Optional<Habitat> getHabitat() {
+    public Habitat getHabitat() {
         return habitat;
     }
 
-    private void setHabitat(Optional<Habitat> habitat) {
+    public void setHabitat(Habitat habitat) {
         this.habitat = habitat;
     }
 
@@ -193,7 +228,7 @@ public class Observation {
         return habitatDescription;
     }
 
-    private void setHabitatDescription(String habitatDescription) {
+    public void setHabitatDescription(String habitatDescription) {
         this.habitatDescription = habitatDescription;
     }
 
@@ -201,7 +236,7 @@ public class Observation {
         return hostTaxon;
     }
 
-    private void setHostTaxon(Taxon hostTaxon) {
+    public void setHostTaxon(Taxon hostTaxon) {
         this.hostTaxon = hostTaxon;
     }
     

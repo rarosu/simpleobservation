@@ -1,38 +1,55 @@
 package com.rarosu.simpleobservation.common.models;
 
-import java.util.Optional;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-
+@Entity
+@Table(name = "habitat")
 public class Habitat {
-    private int id;
-    private Optional<Habitat> parentHabitat;
+    
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
+    private Integer id;
+    
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "parent_habitat_id")
+    private Habitat parentHabitat;
+    
+    @Column(name = "swedish_name")
     private String swedishName;
 
     /**
      * Used by Hibernate.
      */
-    private Habitat() {
+    Habitat() {
     }
     
-    public Habitat(int id, Optional<Habitat> parentHabitat, String swedishName) {
+    public Habitat(Integer id, Habitat parentHabitat, String swedishName) {
         this.id = id;
         this.parentHabitat = parentHabitat;
         this.swedishName = swedishName;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    private void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Optional<Habitat> getParentHabitat() {
+    public Habitat getParentHabitat() {
         return parentHabitat;
     }
 
-    private void setParentHabitat(Optional<Habitat> parentHabitat) {
+    public void setParentHabitat(Habitat parentHabitat) {
         this.parentHabitat = parentHabitat;
     }
 
@@ -40,7 +57,7 @@ public class Habitat {
         return swedishName;
     }
 
-    private void setSwedishName(String swedishName) {
+    public void setSwedishName(String swedishName) {
         this.swedishName = swedishName;
     }
 }
