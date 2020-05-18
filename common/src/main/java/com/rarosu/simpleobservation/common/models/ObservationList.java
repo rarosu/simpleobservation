@@ -3,6 +3,7 @@ package com.rarosu.simpleobservation.common.models;
 import java.time.OffsetDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -26,6 +27,7 @@ public class ObservationList {
     private Double latitude;
     
     @Column(name = "coordinate_precision")
+    @Enumerated
     private Precision coordinatePrecision;
     
     @Column(name = "location_name")

@@ -2,6 +2,7 @@ package com.rarosu.simpleobservation.common.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -26,6 +27,7 @@ public class Taxon {
     private Taxon parentTaxon;
     
     @Column(name = "ranking")
+    @Enumerated
     private TaxonRanking ranking;
     
     @Column(name = "scientific_name")

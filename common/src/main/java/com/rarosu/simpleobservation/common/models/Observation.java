@@ -3,6 +3,7 @@ package com.rarosu.simpleobservation.common.models;
 import java.time.OffsetDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -33,6 +34,7 @@ public class Observation {
     private Double latitude;
     
     @Column(name = "coordinate_precision")
+    @Enumerated
     private Precision coordinatePrecision;
     
     @Column(name = "location_name")
@@ -51,15 +53,18 @@ public class Observation {
     private OffsetDateTime observationDateTime;
     
     @Column(name = "sex")
+    @Enumerated
     private Sex sex;
     
     @Column(name = "individual_count")
     private Integer individualCount;
     
     @Column(name = "individual_count_measure")
+    @Enumerated
     private IndividualCountMeasure individualCountMeasure;
     
     @Column(name = "age_stage")
+    @Enumerated
     private AgeStage ageStage;
     
     @Column(name = "is_found")
