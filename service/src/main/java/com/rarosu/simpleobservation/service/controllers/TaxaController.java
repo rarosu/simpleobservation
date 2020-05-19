@@ -1,6 +1,7 @@
 package com.rarosu.simpleobservation.service.controllers;
 
 import com.rarosu.simpleobservation.common.models.Taxon;
+import com.rarosu.simpleobservation.common.models.TaxonRanking;
 import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -32,10 +33,11 @@ public class TaxaController {
     
     @GetMapping(path = "/taxa")
     @Transactional
-    public List<Taxon> getAll() {
+    public Taxon getAll() {
+        // There exists only one clade (Tracheophyta) in this application. Return it and all its subtaxa.
         Session session = sessionFactory.getCurrentSession();
         JinqStream<Taxon> stream = streamProvider.streamAll(session, Taxon.class);
-        return stream.toList();
+        return stream.where(t -> t.getRanking() == TaxonRanking.CLADE).findOne().orElseThrow();
     }
     
     @GetMapping(path = "/taxa/{id}")

@@ -1,5 +1,6 @@
 package com.rarosu.simpleobservation.common.models;
 
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -26,6 +28,9 @@ public class Taxon {
     @JoinColumn(name = "parent_taxon_id")
     private Taxon parentTaxon;
     
+    @OneToMany(mappedBy = "parentTaxon", fetch = FetchType.LAZY)
+    private Set<Taxon> childTaxa;
+    
     @Column(name = "ranking")
     @Enumerated
     private TaxonRanking ranking;
@@ -42,10 +47,9 @@ public class Taxon {
     Taxon() {
     }
     
-    public Taxon(Integer id, Integer dyntaxaId, Taxon parentTaxon, TaxonRanking ranking, String scientificName, String swedishName) {
+    public Taxon(Integer id, Integer dyntaxaId, TaxonRanking ranking, String scientificName, String swedishName) {
         this.id = id;
         this.dyntaxaId = dyntaxaId;
-        this.parentTaxon = parentTaxon;
         this.ranking = ranking;
         this.scientificName = scientificName;
         this.swedishName = swedishName;
@@ -73,6 +77,14 @@ public class Taxon {
 
     public void setParentTaxon(Taxon parentTaxon) {
         this.parentTaxon = parentTaxon;
+    }
+
+    public Set<Taxon> getChildTaxa() {
+        return childTaxa;
+    }
+
+    public void setChildTaxa(Set<Taxon> childTaxa) {
+        this.childTaxa = childTaxa;
     }
 
     public TaxonRanking getRanking() {
