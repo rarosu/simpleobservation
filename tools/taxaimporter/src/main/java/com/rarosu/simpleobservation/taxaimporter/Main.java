@@ -1,12 +1,13 @@
 package com.rarosu.simpleobservation.taxaimporter;
 
 import com.rarosu.simpleobservation.common.models.Taxon;
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Optional;
-import java.util.Scanner;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 
@@ -37,13 +38,20 @@ public class Main {
         var taxonPersister = new TaxonPersister();
         
         TaxaUpdateSummary summary = taxonPersister.previewChanges(taxa);
-        System.out.println(String.format("%s taxa will be added, %s taxa will be updated and %s taxa exists in the database that does not exist in the provided excel (will not be modified).", summary.getTaxaToBeCreated(), summary.getTaxaToBeUpdated(), summary.getTaxaNoLongerPresent()));
+        System.out.println(String.format("%s taxa will be added, %s taxa will be updated and %s taxa exists in the database that does not exist in the provided excel (will not be modified).", summary.getTaxaToBeCreated().size(), summary.getTaxaToBeUpdated().size(), summary.getTaxaNoLongerPresent().size()));
         
         Optional<Boolean> answer;
-        do {
-            System.out.println("Continue with import (y/n)?");
-            answer = getYesNoInput();
-        } while (answer.isEmpty());
+        try {
+            do {
+                System.out.println("Continue with import (y/n)?");
+                answer = getYesNoInput();
+            } while (answer.isEmpty());
+        }
+        catch (IOException ex) {
+            System.out.println(String.format("Error on fetching user input. Exception %s.", ex));
+            System.exit(1);
+            return;
+        }
         
         if (answer.orElseThrow()) {
             taxonPersister.saveTaxa(taxa);
@@ -52,9 +60,9 @@ public class Main {
         System.out.println("Finished running the taxa importer!");
     }
     
-    private static Optional<Boolean> getYesNoInput() {
-        Scanner scanner = new Scanner(System.in);
-        String line = scanner.nextLine();
+    private static Optional<Boolean> getYesNoInput() throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String line = reader.readLine();
         if (line.equalsIgnoreCase("y"))
             return Optional.of(true);
         else if (line.equalsIgnoreCase("n"))
